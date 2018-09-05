@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Bistro Babushka</title>
+    <style>
+        body {
+            background-color: rgb(240, 240, 240);
+        }
+
+        article {
+            padding: 1em;
+            background-color: white;
+        }
+
+        .data-container article img {
+            width: 100%;
+        }
+
+        .data-container {
+            margin: 0 auto;
+            display: grid;
+        }
+
+        @media screen and (min-width:580px) {
+            .data-container {
+                padding-left: 10%;
+                padding-right: 10%;
+                grid-gap: 5px;
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+        <section class="data-container">
+            <article class="ret">
+                <h2></h2>
+                <img src="" alt="">
+                <br>
+                <br> <span class="data-langbeskrivelse"></span>
+                <br> <span class="data-pris"></span>
+
+            </article>
+        </section>
+    </main>
+
+    <script>
+        let urlParams = new URLSearchParams(window.location.search);
+        let navn = urlParams.get("navn");
+        console.log(navn);
+
+
+        let retter;
+        document.addEventListener("DOMContentLoaded", hentJson);
+        async function hentJson() {
+            let myJson = await fetch("json/menu.json");
+            retter = await myJson.json();
+            visRetter();
+        }
+
+        function visRetter() {
+            let dest = document.querySelector(".data-container");
+
+            retter.forEach(ret => {
+                if (ret.navn == navn) {
+                    dest.querySelector("h2").textContent = ret.navn;
+                    dest.querySelector(".ret-billede").src = "small/" + ret.billede + "-sm.jpg";
+                    ret.billede.jpg;
+
+                    dest.querySelector(".ret-billede").alt = "billede af" + ret.navn;
+                    dest.querySelector(".ret-langbeskrivelse").textContent = ret.langbeskrivelse;
+                    dest.querySelector(".ret-pris").textContent = "Pris: " + ret.pris + ",-";
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
